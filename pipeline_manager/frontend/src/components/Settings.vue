@@ -132,6 +132,19 @@ export default {
             return option;
         });
 
+        const removeEmptySubgraphs = computed(() => {
+            const option = new CheckboxInterface(
+                'Remove empty subgraphs',
+                props.viewModel.settings.removeEmptySubgraphs,
+            ).setPort(false);
+            option.events.setValue.subscribe(this, (v) => {
+                props.viewModel.settings.removeEmptySubgraphs = v; // eslint-disable-line vue/no-mutating-props,max-len,no-param-reassign
+                metadataChanged('removeEmptySubgraphs', v);
+            });
+            option.componentName = 'CheckboxInterface';
+            return option;
+        });
+
         const showHiddenProperties = computed(() => {
             const option = new CheckboxInterface(
                 'Show hidden properties',
@@ -297,6 +310,7 @@ export default {
                 switchableInterfacesOption.value,
                 showIds.value,
                 showHiddenProperties.value,
+                removeEmptySubgraphs.value,
             ];
             if (viewsPresent.value) {
                 options.push(viewSelected.value);
