@@ -214,6 +214,16 @@ def build_pipeline_manager(app):
             workspace_directory=workspace_dir,
         )
 
+    if not frontend_changed:
+        if not (workspace_dir / "frontend" / ".env.static.local").exists():
+            frontend_changed = True
+        else:
+            with open(
+                workspace_dir / "frontend" / ".env.static.local"
+            ) as config:
+                if "VUE_APP_SINGLEHTML_BUILD=true" not in config.read():
+                    frontend_changed = True
+
     if frontend_changed:
         status = build_frontend(
             build_type="static-html",
