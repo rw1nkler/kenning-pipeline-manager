@@ -416,8 +416,13 @@ export default function createPipelineManagerGraph(graph) {
 
         startTransaction();
 
+        const oldGroups = this.groups.filter((g) => g.nodes.includes(oldNode.id));
+        oldGroups.forEach((g) => {
+            g.nodes[g.nodes.findIndex((id) => id === oldNode.id)] = newNodeInstance.id;
+        });
         this.removeNode(oldNode);
         this.addNode(newNodeInstance);
+
         connectionsToRestore.forEach((conn) => {
             this.internalAddConnection(conn);
         });
@@ -858,6 +863,7 @@ export default function createPipelineManagerGraph(graph) {
                             i.bus?.stubs?.some((s) => [c.to, c.from].includes(s))),
                 )
                 .forEach((c) => this.removeConnection(c));
+            this.ungroupNode(node);
             this._nodes.splice(this.nodes.indexOf(node), 1);
             this.events.removeNode.emit(node);
             node.events.propertyEdit.unsubscribe(this);
