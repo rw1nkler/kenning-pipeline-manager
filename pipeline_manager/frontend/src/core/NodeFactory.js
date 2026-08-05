@@ -1115,7 +1115,9 @@ export class CustomNode extends Node {
 
         // Default position should be undefined instead of (0, 0) so that it can be set
         // by autolayout
-        this.position = state?.position;
+        if (state.position === undefined) {
+            this.position = undefined;
+        }
 
         this.views = state?.views;
 
