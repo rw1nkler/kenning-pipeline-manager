@@ -36,6 +36,7 @@ export const COPY_COMMAND = 'COPY';
 export const DELETE_COMMAND = 'DELETE';
 export const UNHIGHLIGHT_COMMAND = 'UNHIGHLIGHT';
 export const PASTE_COMMAND = 'PASTE';
+export const UNPASTE_COMMAND = 'UNPASTE';
 export const CLEAR_CLIPBOARD_COMMAND = 'CLEAR_CLIPBOARD';
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -304,6 +305,11 @@ export function useClipboard(
     commandHandler.registerCommand(PASTE_COMMAND, {
         canExecute: () => !isEmpty.value,
         execute: paste,
+    });
+    commandHandler.registerHotkey(['Control', 'z'], UNPASTE_COMMAND);
+    commandHandler.registerCommand(UNPASTE_COMMAND, {
+        canExecute: () => true,
+        execute: () => { consecutivePasteNumber.value -= 1; },
     });
     commandHandler.registerHotkey(['Control', 'v'], PASTE_COMMAND);
     commandHandler.registerCommand(CLEAR_CLIPBOARD_COMMAND, {
