@@ -1192,6 +1192,17 @@ const createContextMenuInterfaceItems = () => {
         );
     }
 
+    if (chosenInterface !== undefined && chosenInterface.side) {
+        switch (chosenInterface.side) {
+            case 'left':
+                items.push({ value: 'MoveRight', label: 'Move Right' });
+                break;
+            case 'right':
+                items.push({ value: 'MoveLeft', label: 'Move Left' });
+                break;
+        }
+    }
+
     return items;
 };
 
@@ -1243,6 +1254,12 @@ const onContextMenuInterfaceClick = (action) => {
             });
             break;
         }
+        case 'MoveLeft':
+            chosenInterface.side = 'left';
+            break;
+        case 'MoveRight':
+            chosenInterface.side = 'right';
+            break;
     }
 };
 
