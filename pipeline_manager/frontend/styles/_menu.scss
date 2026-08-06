@@ -24,5 +24,8 @@
             color: $white;
             font-size: $fs-medium;
         }
+        & input.baklava-input {
+          box-sizing: border-box;
+        }
     }
 }
