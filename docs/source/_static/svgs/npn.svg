@@ -1,40 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="65.698074"
-   height="70"
-   version="1.1"
-   id="svg35"
-   sodipodi:docname="npn.svg"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs39" />
-  <sodipodi:namedview
-     id="namedview37"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="13.337662"
-     inkscape:cx="31.527264"
-     inkscape:cy="35.463486"
-     inkscape:window-width="2560"
-     inkscape:window-height="1371"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg35" />
-  <path
-     fill="none"
-     stroke="#ffffff"
-     stroke-width="3.5"
-     d="m 8,34 a 28,28 0 1 1 0,2 M 0,35 H 30 M 27,20 v 30 h 2 V 20 M 28,29 49,14 V 0 M 28,42 49,56 v 14 m -10,-17 3,-5 4,6 z"
-     id="path33" />
+<svg width="38" height="44" viewBox="0 0 38 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1_4)">
+<path d="M3.31581 21.7619C3.31581 31.0192 10.8563 38.5237 20.1579 38.5237C29.4595 38.5237 37 31.0192 37 21.7619C37 12.5045 29.4595 5 20.1579 5C10.8563 5 3.31581 12.5045 3.31581 21.7619Z" stroke="white" stroke-linecap="square"/>
+<path d="M18 22L0 22" stroke="white"/>
+<path d="M17.8948 30.3809V13.619" stroke="white" stroke-linecap="square"/>
+<path d="M17.8433 17.7583L30.5 8.5V0" stroke="white"/>
+<path d="M30.5264 35L28.0808 29.77L24.7743 34.5029L30.5264 35ZM17.8433 26.1392L17.557 26.5491L26.5511 32.8327L26.8374 32.4228L27.1238 32.0129L18.1297 25.7293L17.8433 26.1392Z" fill="white"/>
+<path d="M30.5264 35C30.5264 38.1242 30.5264 40.8758 30.5264 44" stroke="white"/>
+</g>
+<defs>
+<clipPath id="clip0_1_4">
+<rect width="38" height="44" fill="white"/>
+</clipPath>
+</defs>
 </svg>
