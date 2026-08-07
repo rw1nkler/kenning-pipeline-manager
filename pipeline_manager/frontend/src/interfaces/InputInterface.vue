@@ -49,3 +49,11 @@ export default defineComponent({
     },
 });
 </script>
+
+<style lang="scss" scoped>
+.baklava-input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+</style>
