@@ -63,7 +63,7 @@ to-image = [
 ]
 # Pinned wheel URL - bump alongside "version" on every release.
 prebuilt = [
-    "pipeline-manager-prebuilt-frontend @ https://github.com/antmicro/kenning-pipeline-manager/releases/download/v0.0.5/pipeline_manager_prebuilt_frontend-0.0.5-py3-none-any.whl",
+    "pipeline-manager-prebuilt-frontend @ https://github.com/rw1nkler/kenning-pipeline-manager/releases/download/v0.0.5/pipeline_manager_prebuilt_frontend-0.0.5-py3-none-any.whl",
 ]
 
 [project.urls]
