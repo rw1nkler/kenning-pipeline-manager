@@ -2,7 +2,7 @@ name: Release latest
 
 on:
   push:
-    branches: [main]
+    branches: [prebuilt]
 
 concurrency:
   group: release-latest
