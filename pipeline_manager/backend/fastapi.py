@@ -79,7 +79,7 @@ def create_app(
             dirs_exist_ok=True,
         )
     app.mount(
-        "/", StaticFiles(directory=frontend_dir, html=True), name="static"
+        "/", StaticFiles(directory=frontend_dir, html=True, follow_symlink=True), name="static"
     )
 
     app.add_middleware(
