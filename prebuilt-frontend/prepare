@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+
+# Copyright (c) 2022-2026 Antmicro <www.antmicro.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+"""
+Builds the pipeline-manager-prebuilt-frontend sdist/wheel locally.
+"""
+
+import argparse
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+PACKAGE_DIR = Path(__file__).parent.resolve()
+REPO_ROOT = PACKAGE_DIR.parent
+DIST_ASSETS_DIR = PACKAGE_DIR / "pipeline_manager_prebuilt_frontend" / "dist"
+
+
+def build_frontend_assets(skip_install_deps: bool):  # noqa: D103
+    if DIST_ASSETS_DIR.exists():
+        shutil.rmtree(DIST_ASSETS_DIR)
+
+    cmd = [
+        sys.executable,
+        str(REPO_ROOT / "build"),
+        "server-app",
+        "--output-directory",
+        str(DIST_ASSETS_DIR),
+        "--clean-build",
+    ]
+    if skip_install_deps:
+        cmd.append("--skip-install-deps")
+
+    result = subprocess.run(cmd, cwd=REPO_ROOT)
+    if result.returncode != 0:
+        sys.exit(result.returncode)
+
+
+def build_package():  # noqa: D103
+    result = subprocess.run([sys.executable, "-m", "build"], cwd=PACKAGE_DIR)
+    if result.returncode != 0:
+        sys.exit(result.returncode)
+
+
+def main():  # noqa: D103
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--skip-frontend-build",
+        action="store_true",
+        help="Reuse an already-built dist/ directory instead of rebuilding "
+        "the frontend with npm.",
+    )
+    parser.add_argument(
+        "--skip-install-deps",
+        action="store_true",
+        help="Passed through to `./build` - skips `npm install`.",
+    )
+    args = parser.parse_args()
+
+    if args.skip_frontend_build:
+        if not DIST_ASSETS_DIR.exists():
+            sys.exit(
+                f"--skip-frontend-build was given but {DIST_ASSETS_DIR} "
+                "does not exist - build it first."
+            )
+    else:
+        build_frontend_assets(args.skip_install_deps)
+
+    build_package()
+
+
+if __name__ == "__main__":
+    main()

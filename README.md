@@ -201,6 +201,12 @@ To install Pipeline Manager with `pip`, run:
 pip install -U git+https://github.com/antmicro/kenning-pipeline-manager.git
 ```
 
+Alternatively, you can install the `prebuilt` extra to get a version with the frontend already built in, requiring no `npm`/Node.js:
+
+```
+pip install "pipeline-manager[prebuilt] @ git+https://github.com/antmicro/kenning-pipeline-manager.git"
+```
+
 To work directly with the repository, install the module with:
 
 ```

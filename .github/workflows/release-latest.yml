@@ -1,0 +1,57 @@
+name: Release latest
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-latest
+  cancel-in-progress: true
+
+jobs:
+
+  ReleaseLatest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install pipeline-manager (for the build CLI) and build tool
+        run: pip install -e . build
+      - name: Build pipeline-manager wheel
+        run: python -m build --wheel
+      - name: Build prebuilt-frontend (frontend build + sdist/wheel)
+        run: ./prebuilt-frontend/prepare
+
+      - name: Rename wheels to fixed "latest" names
+        run: |
+          mkdir latest-assets
+          cp dist/pipeline_manager-*-py3-none-any.whl latest-assets/pipeline_manager-latest-py3-none-any.whl
+          cp prebuilt-frontend/dist/pipeline_manager_prebuilt_frontend-*-py3-none-any.whl latest-assets/pipeline_manager_prebuilt_frontend-latest-py3-none-any.whl
+
+      - name: Delete the previous "latest" release and tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view latest >/dev/null 2>&1; then
+            gh release delete latest --yes --cleanup-tag
+          fi
+
+      - name: Re-create the "latest" release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create latest latest-assets/* \
+            --target "${{ github.sha }}" \
+            --title "Latest (main)" \
+            --prerelease \
+            --notes "Automatically built from $(git rev-parse --short HEAD). Not a stable release - see the versioned releases for those."

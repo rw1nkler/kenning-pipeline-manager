@@ -17,7 +17,34 @@ from fastapi.staticfiles import StaticFiles
 
 from pipeline_manager import frontend
 
-dist_path = Path(os.path.dirname(frontend.__file__)) / "dist"
+local_dist_path = Path(os.path.dirname(frontend.__file__)) / "dist"
+
+
+def _resolve_dist_path() -> Path:
+    """
+    Resolves the path to the built frontend.
+
+    Returns
+    -------
+    Path
+        Path to the built frontend. Preference order: local build,
+        then the prebuilt package, then the (possibly nonexistent)
+        local path.
+    """
+    if local_dist_path.exists():
+        return local_dist_path
+    try:
+        from pipeline_manager_prebuilt_frontend import (
+            dist_path as prebuilt_dist_path,
+        )
+    except ImportError:
+        return local_dist_path
+    if prebuilt_dist_path.exists():
+        return prebuilt_dist_path
+    return local_dist_path
+
+
+dist_path = _resolve_dist_path()
 
 
 def create_app(

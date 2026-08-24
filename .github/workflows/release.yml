@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+
+  Release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install pipeline-manager (for the build CLI) and build tool
+        run: pip install -e . build
+      - name: Build pipeline-manager sdist and wheel
+        run: python -m build
+      - name: Build prebuilt-frontend (frontend build + sdist/wheel)
+        run: ./prebuilt-frontend/prepare
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            dist/* prebuilt-frontend/dist/* \
+            --title "${GITHUB_REF_NAME}" \
+            --generate-notes
